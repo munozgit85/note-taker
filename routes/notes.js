@@ -16,7 +16,7 @@ router.get("/notes", (req, res) => {
 
 //route to read the `db.json` file and return all saved notes as JSON.
 router.get("/api/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "../db/db.json"));
+    res.sendFile(path.join(__dirname, "./db/db.json"));
 });
 
 //route to index.html
