@@ -9,73 +9,53 @@ const path = require('path');
 
 
 
+//API routes to the notes.html 
+router.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/notes.html"));
+});
 
-    //API Routes 
-//route to notes.html
-    router.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/notes.html"));
-    });
-
-    //route to read the `db.json` file and return all saved notes as JSON.
-    router.get("/api/notes", (req, res) => {
+//route to read the `db.json` file and return all saved notes as JSON.
+router.get("/api/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "../db/db.json"));
-    });
+});
 
+//route to index.html
+router.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/index.html"));
+});
 
+// post a new note to db.json, then write to the hml 
+router.post("/api/notes", (req, res) => {
+    let newNote = req.body;
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let notelength = (noteList.length).toString();
 
-
-
-    // Setup the /api/notes post route
-    router.post("api/notes", function(req, res) {
-        let newNote = req.body;
-        let noteList = JSON.parse(fs.readFileSync("../db/db.json", "utf8"));
-        let notelength = (noteList.length).toString();
-
-    //new note with a specific id and send to JSON 
+    //new note with unique id based on length 
     newNote.id = notelength;
-    //push the new note to  db.json
+    //push new note to  db.json
     noteList.push(newNote);
 
-    //write the updated data to db.json
-    fs.writeFileSync("../db/db.json", JSON.stringify(noteList));
+    //write the note to  db.json
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
     res.json(noteList);
-    });
+})
 
-    // Deletes a note with specific id
-    router.delete("api/notes/:id", function(req, res) {
-        let noteList = JSON.parse(fs.readFileSync("../db/db.json", "utf8"));
-        let noteId = (req.params.id).toString();
-    
-        //filter notes not with  matching id and saved them as a new array
-        //the matching array will be deleted
-        noteList = noteList.filter(selected =>{
-            return selected.id != noteId;
-        })
-    
-        //write the updated data to db.json 
-        fs.writeFileSync("../db/db.json", JSON.stringify(noteList));
-        res.json(noteList);
-    });
+//delete note based on  id.
+router.delete("/api/notes/:id", (req, res) => {
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let noteId = (req.params.id).toString();
 
-    //Routes to display the note and index html page with the note created.
+    //filter all notes that does not have matching id and saved them as a new array
+    //the matching array will be deleted
+    noteList = noteList.filter(selected =>{
+        return selected.id != noteId;
+    })
 
-    router.get('/notes', function(req,res) {
-        res.sendFile(path.join(__dirname, "../public/notes.html"));
-    });
+    //write new note to  db.json and display
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    res.json(noteList);
+});
 
-  //route to  `db.json` file and return all saved notes as JSON.
-    router.get("/api/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "../db/db.json"));
-    });
-    
-    
-    // Display index.html when all other routes are accessed
-    router.get('*', function(req,res) {
-        res.sendFile(path.join(__dirname, "../public/index.html"));
-    });
-
-      
-    
 
 
 
