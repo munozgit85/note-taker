@@ -3,22 +3,19 @@ const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
 const allNotes = require('../db/db.json');
-//const express = require('express');
-//const app = express();
-//const {db} = require("../db/db.json");
 
 
 
-//API routes to the notes.html 
+
+//API routes  
 router.get('/api/notes', (req, res) => {
     res.json(allNotes.splice(1));
 });
-
+//route notes to notes html 
 router.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/notes.html'));
 });
 
-//route to read the `db.json` file and return all saved notes as JSON.
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
   });
@@ -28,6 +25,7 @@ router.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+//function to create note and send to json 
 function createNewNote(body, notesArray) {
     const newNote = body;
     if (!Array.isArray(notesArray))
@@ -46,12 +44,13 @@ function createNewNote(body, notesArray) {
     );
     return newNote;
 }
-
+//function to post notes to notes file
 router.post('/api/notes', (req, res) => {
     const newNote = createNewNote(req.body, allNotes);
     res.json(newNote);
 });
 
+//function to delete note
 function deleteNote(id, notesArray) {
     for (let i = 0; i < notesArray.length; i++) {
         let note = notesArray[i];
