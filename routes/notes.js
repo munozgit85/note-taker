@@ -11,17 +11,28 @@ const path = require('path');
 
 //API routes to the notes.html 
 router.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/notes.html"));
+    res.sendFile(path.join(__dirname, "../public/notes.html"));
 });
 
 //route to read the `db.json` file and return all saved notes as JSON.
-router.get("/api/notes", (req, res) => {
+router.get("api/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "./db/db.json"));
 });
 
 //route to index.html
 router.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+// Retrieves a note with specific id
+router.get("/notes/:id", function(req,res) {
+    // display json for the notes array indices of the provided id
+    res.json(notes[req.params.id]);
+});
+
+router.get("api/notes", function(req, res) {
+    // Read the db.json file and return all saved notes as JSON.
+    res.json(notes);
 });
 
 // post a new note to db.json, then write to the hml 
