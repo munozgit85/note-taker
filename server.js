@@ -1,20 +1,24 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const notesRoutes = require('./routes/notes');
+const app = express();
+
+
+
 
 
 
 const PORT = process.env.PORT || 3001;
-const app = express();
-const notesRoutes = require('./routes/notes');
 
 
 
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(__dirname));
-app.use('/api', notesRoutes);
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
+app.use('/', notesRoutes);
 
 
 
