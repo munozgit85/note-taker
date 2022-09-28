@@ -8,7 +8,7 @@ const allNotes = require('../db/db.json');
 
 //API routes  
 router.get('/api/notes', (req, res) => {
-    res.json(allNotes.splice(1));
+    res.json(allNotes);
 });
 
 

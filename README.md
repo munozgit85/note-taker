@@ -31,6 +31,8 @@ Uses the npm install express: type in command line ==> npm i express
 
 
   ## Screen Shot 
+https://github.com/munozgit85/note-taker/blob/main/notetakepic.png?raw=true![image](https://user-images.githubusercontent.com/107218022/192635309-2e8107f5-36ae-4283-a165-f273a905340d.png)
+
 
   ## License
     No license. 
