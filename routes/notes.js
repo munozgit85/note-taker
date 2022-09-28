@@ -6,12 +6,11 @@ const allNotes = require('../db/db.json');
 
 
 
+
 //API routes  
 router.get('/api/notes', (req, res) => {
     res.json(allNotes);
 });
-
-
 //route notes to notes html 
 router.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/notes.html'));
@@ -29,7 +28,6 @@ router.get("*", (req, res) => {
 //function to create note and send to json 
 function createNewNote(body, notesArray) {
     const newNote = body;
-
     if (!Array.isArray(notesArray))
         notesArray = [];
     
@@ -45,14 +43,12 @@ function createNewNote(body, notesArray) {
         JSON.stringify(notesArray, null, 2)
     );
     return newNote;
-    }
-
+}
 //function to post notes to notes file
 router.post('/api/notes', (req, res) => {
     const newNote = createNewNote(req.body, allNotes);
     res.json(newNote);
-})
-
+});
 
 //function to delete note
 function deleteNote(id, notesArray) {
