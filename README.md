@@ -31,7 +31,6 @@ Uses the npm install express: type in command line ==> npm i express
 
 
   ## Screen Shot 
-   
 
   ## License
     No license. 
