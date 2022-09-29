@@ -7,7 +7,7 @@ const allNotes = require('../db/db.json');
 
 
 
-//API routes  
+// route to get all notes and display 
 router.get('/api/notes', (req, res) => {
     res.json(allNotes);
 });
@@ -16,9 +16,6 @@ router.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/notes.html'));
 });
 
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-  });
 
 //route to index.html
 router.get("*", (req, res) => {
@@ -68,9 +65,11 @@ function deleteNote(id, notesArray) {
 }
 
 router.delete('/api/notes/:id', (req, res) => {
+
     deleteNote(req.params.id, allNotes);
-    res.json(true);
+   res.json(true);
 });
+
 
 
 
